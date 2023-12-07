@@ -77,6 +77,10 @@ const recalc = () => {
   calcStdev();
 };
 
+const vibrate = () => {
+  navigator?.vibrate([30,20,20]);
+};
+
 const format = (price, precision = 2, split = false) => {
   const num = (price ?? 0);
   const str = (Number.isNaN(num) ? 0 : num).toFixed(precision);
@@ -119,7 +123,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="box" @click="showSources = !showSources">
+  <div class="box" @click="showSources = !showSources; vibrate()">
     <p class="average"><span class="nobr">1 BTC</span> = <span class="nobr">{{ format(average, 0, true) }} USD</span></p>
     <Transition>
       <div v-show="showSources" ref="dataSourcesEl">
