@@ -40,13 +40,13 @@ window.addEventListener('resize', event => {
 <style scoped>
 .background {
   overflow: hidden;
+  height: 100vh;
+  width: 100vw;
 }
 .background svg {
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 100%;
   z-index: -1;
 }
 </style>
