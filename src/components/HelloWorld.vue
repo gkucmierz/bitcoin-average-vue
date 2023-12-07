@@ -111,19 +111,31 @@ const showSources = ref(true);
 <template>
   <div class="box" @click="showSources = !showSources">
     <p class="average">1 BTC = <span class="nobr">{{ format(average) }} USD</span></p>
-    <div v-show="showSources">
-      <p>Data Sources:</p>
-      <ul>
-        <li v-for="(val, i) in dataSources">
-          {{ val.name }}: {{ format(prices[i]) }}
-        </li>
-      </ul>
-      <p>Standard Deviation: {{ stdev }}</p>
-    </div>
+    <Transition>
+      <div v-show="showSources">
+        <p>Data Sources:</p>
+        <ul>
+          <li v-for="(val, i) in dataSources">
+            {{ val.name }}: {{ format(prices[i]) }}
+          </li>
+        </ul>
+        <p>Standard Deviation: {{ stdev }}</p>
+      </div>
+    </Transition>
   </div>
 </template>
 
 <style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
 .box {
   cursor: pointer;
 
@@ -137,7 +149,7 @@ const showSources = ref(true);
   backdrop-filter: blur(2px);
 
   color: #333;
-  padding: 10px 20px;
+  padding: 32px;
 }
 
 .average {
