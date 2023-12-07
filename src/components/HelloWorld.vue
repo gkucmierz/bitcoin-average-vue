@@ -34,12 +34,12 @@ const dataSources = [
     pick: res => +res.result.XXBTZUSD.a[0],
     asset: 'USD',
   },
-  {
-    name: 'bitstamp',
-    url: 'https://www.bitstamp.net/api/v2/ticker/btcusd',
-    pick: res => +res.last,
-    asset: 'USD',
-  },
+  // {
+  //   name: 'bitstamp',
+  //   url: 'https://www.bitstamp.net/api/v2/ticker/btcusd',
+  //   pick: res => +res.last,
+  //   asset: 'USD',
+  // },
   {
     name: 'coingecko',
     url: 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd',
@@ -67,13 +67,14 @@ const prices = ref([]);
 
 (() => {
   let idx = -1;
-  const loop = () => {
-    idx = (idx + 1) % dataSources.length;
-    const source = dataSources[idx];
-    get(source.url).then(res => {
-      prices.value[idx] = source.pick(res);
-    }).then(calcAverage);
+  const loop = async () => {
     setTimeout(loop, TIMEOUT / dataSources.length);
+    idx = (idx + 1) % dataSources.length;
+    try {
+      const source = dataSources[idx];
+      prices.value[idx] = source.pick(await get(source.url));
+      calcAverage();
+    } catch (e) {};
   };
   loop();
 })();
