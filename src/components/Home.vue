@@ -123,13 +123,14 @@ onMounted(() => {
     <p class="average"><span class="nobr">1 BTC</span> = <span class="nobr">{{ format(average, 0, true) }} USD</span></p>
     <Transition>
       <div v-show="showSources" ref="dataSourcesEl">
-        <p>Data Sources:</p>
-        <ul class="gray">
+        <p class="vert-margin">Data Sources:</p>
+        <ul>
           <li v-for="(val, i) in dataSources">
-            {{ val.name }}: {{ format(prices[i]) }}
+            <div class="li-name">{{ val.name }}:</div>
+            <div class="li-price">{{ format(prices[i]) }}</div>
           </li>
         </ul>
-        <p>Standard Deviation: {{ format(stdev) }} ({{ format(stdev/average*100, 4) }}%)</p>
+        <p class="vert-margin">St. Deviation: {{ format(stdev) }} ({{ format(stdev/average*100, 4) }}%)</p>
       </div>
     </Transition>
   </div>
@@ -147,10 +148,6 @@ onMounted(() => {
 .v-leave-to {
   opacity: 0;
   height: 0;
-}
-
-.gray {
-  opacity: 0.6;
 }
 
 .box {
@@ -176,6 +173,28 @@ onMounted(() => {
 
 .nobr {
   white-space: nowrap;
+}
+
+.box ul li {
+  display: flex;
+  flex-basis: 0;
+  overflow: hidden;
+}
+.box ul li div {
+  flex-basis: 0;
+  padding: 0 4px;
+}
+.li-name {
+  color: rgba(0, 0, 0, 0.5);
+  text-align: right;
+  flex-grow: 7;
+}
+.li-price {
+  text-align: left;
+  flex-grow: 5;
+}
+.vert-margin {
+  margin: 8px 0;
 }
 
 </style>
