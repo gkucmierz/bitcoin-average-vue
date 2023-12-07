@@ -109,18 +109,24 @@ const showSources = ref(true);
 </script>
 
 <template>
-  <p>1 BTC = {{ format(average) }} USD</p>
-  <button @click="showSources = !showSources">Toggle Sources</button>
-  <div v-show="showSources">
-    <p>Data Sources:</p>
-    <ul>
-      <li v-for="(val, i) in dataSources">
-        {{ val.name }}: {{ format(prices[i]) }}
-      </li>
-    </ul>
-    <p>Standard Deviation: {{ stdev }}</p>
+  <div class="box">
+    <p>1 BTC = {{ format(average) }} USD</p>
+    <button @click="showSources = !showSources">Toggle Sources</button>
+    <div v-show="showSources">
+      <p>Data Sources:</p>
+      <ul>
+        <li v-for="(val, i) in dataSources">
+          {{ val.name }}: {{ format(prices[i]) }}
+        </li>
+      </ul>
+      <p>Standard Deviation: {{ stdev }}</p>
+    </div>
   </div>
 </template>
 
 <style scoped>
+  .box {
+    background: #fff;
+    opacity: 0.8;
+  }
 </style>
