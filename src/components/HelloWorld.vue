@@ -28,7 +28,7 @@ const calcAverage = () => {
 };
 
 const format = price => {
-  return price.toFixed(2);
+  return (price ?? 0).toFixed(2);
 };
 
 const average = ref();
