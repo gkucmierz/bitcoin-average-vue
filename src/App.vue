@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import Home from './components/Home.vue';
 import * as Trianglify from 'trianglify';
 
 const roundStep = 200;
@@ -35,7 +35,7 @@ window.addEventListener('resize', event => {
 
 <template>
   <div ref="background" class="background"></div>
-  <HelloWorld/>
+  <Home/>
 </template>
 
 <style scoped>
