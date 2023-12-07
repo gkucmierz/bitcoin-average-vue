@@ -89,7 +89,8 @@ const showSources = ref(true);
 (() => {
   let idx = -1;
   const loop = async () => {
-    setTimeout(loop, TIMEOUT / dataSources.length);
+    const fast = prices.value.length < dataSources.length;
+    setTimeout(loop, fast ? 0 : TIMEOUT / dataSources.length);
     idx = (idx + 1) % dataSources.length;
     try {
       const source = dataSources[idx];
