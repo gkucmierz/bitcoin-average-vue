@@ -78,7 +78,8 @@ const recalc = () => {
 };
 
 const format = (price, precision = 2) => {
-  return (price ?? 0).toFixed(precision);
+  const num = (price ?? 0);
+  return (Number.isNaN(num) ? 0 : num).toFixed(precision);
 };
 
 const average = ref();
@@ -120,7 +121,7 @@ const showSources = ref(true);
             {{ val.name }}: {{ format(prices[i]) }}
           </li>
         </ul>
-        <p>Standard Deviation: {{ stdev }}</p>
+        <p>Standard Deviation: {{ format(stdev) }} ({{ format(stdev/average*100, 4) }}%)</p>
       </div>
     </Transition>
   </div>
