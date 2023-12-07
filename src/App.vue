@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import Home from './components/Home.vue';
-import * as Trianglify from 'trianglify';
+import Trianglify from 'trianglify/dist/trianglify.bundle.js';
 
 const roundStep = 200;
 const round = size => Math.ceil(size / roundStep) * roundStep;
