@@ -77,8 +77,8 @@ const recalc = () => {
   calcStdev();
 };
 
-const format = price => {
-  return (price ?? 0).toFixed(2);
+const format = (price, precision = 2) => {
+  return (price ?? 0).toFixed(precision);
 };
 
 const average = ref();
@@ -111,7 +111,7 @@ const showSources = ref(true);
 
 <template>
   <div class="box" @click="showSources = !showSources">
-    <p class="average">1 BTC = <span class="nobr">{{ format(average) }} USD</span></p>
+    <p class="average">1 BTC = <span class="nobr">{{ format(average, 0) }} USD</span></p>
     <Transition>
       <div v-show="showSources">
         <p>Data Sources:</p>
