@@ -109,9 +109,8 @@ const showSources = ref(true);
 </script>
 
 <template>
-  <div class="box">
-    <p>1 BTC = {{ format(average) }} USD</p>
-    <button @click="showSources = !showSources">Toggle Sources</button>
+  <div class="box" @click="showSources = !showSources">
+    <p class="average">1 BTC = <span class="nobr">{{ format(average) }} USD</span></p>
     <div v-show="showSources">
       <p>Data Sources:</p>
       <ul>
@@ -125,8 +124,29 @@ const showSources = ref(true);
 </template>
 
 <style scoped>
-  .box {
-    background: #fff;
-    opacity: 0.8;
-  }
+.box {
+  cursor: pointer;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+
+  color: #333;
+  padding: 10px 20px;
+}
+
+.average {
+  text-align: center;
+  font-size: 3em;
+}
+
+.nobr {
+  white-space: nowrap;
+}
+
 </style>
