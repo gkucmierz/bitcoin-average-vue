@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const TIMEOUT = 15e3;
 
@@ -77,15 +77,23 @@ const recalc = () => {
   calcStdev();
 };
 
-const format = (price, precision = 2) => {
+const format = (price, precision = 2, split = false) => {
   const num = (price ?? 0);
-  return (Number.isNaN(num) ? 0 : num).toFixed(precision);
+  const str = (Number.isNaN(num) ? 0 : num).toFixed(precision);
+  if (!split) return str;
+  return (str.match(/(^\d{1,2}(?=(\d{3})*$)|\d{3})/g) || []).join(' ');
 };
 
+const dataSourcesEl = ref(null);
+const dataSourcesHeight = ref('100%');
 const average = ref();
 const prices = ref([]);
 const stdev = ref();
 const showSources = ref(true);
+
+onMounted(() => {
+  dataSourcesHeight.value = `${dataSourcesEl.value.offsetHeight}px`;
+});
 
 (() => {
   let idx = -1;
@@ -112,11 +120,11 @@ const showSources = ref(true);
 
 <template>
   <div class="box" @click="showSources = !showSources">
-    <p class="average">1 BTC = <span class="nobr">{{ format(average, 0) }} USD</span></p>
+    <p class="average"><span class="nobr">1 BTC</span> = <span class="nobr">{{ format(average, 0, true) }} USD</span></p>
     <Transition>
-      <div v-show="showSources">
+      <div v-show="showSources" ref="dataSourcesEl">
         <p>Data Sources:</p>
-        <ul>
+        <ul class="gray">
           <li v-for="(val, i) in dataSources">
             {{ val.name }}: {{ format(prices[i]) }}
           </li>
@@ -130,16 +138,23 @@ const showSources = ref(true);
 <style scoped>
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 0.2s ease;
+  overflow: hidden;
+  transition: all 80ms ease-in-out;
+  height: v-bind(dataSourcesHeight);
 }
 
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+  height: 0;
+}
+
+.gray {
+  opacity: 0.6;
 }
 
 .box {
-  cursor: pointer;
+/*  cursor: pointer;*/
 
   position: absolute;
   top: 50%;

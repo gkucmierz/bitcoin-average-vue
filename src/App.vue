@@ -24,7 +24,6 @@ onMounted(updateBackground);
 window.addEventListener('resize', event => {
   const newWidth = round(event.target.innerWidth);
   const newHeight = round(event.target.innerHeight);
-  console.log(newWidth, width.value);
   if (newWidth === width.value && newHeight === height.value) return;
   width.value = newWidth;
   height.value = newHeight;
