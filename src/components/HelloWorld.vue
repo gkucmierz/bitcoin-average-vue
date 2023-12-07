@@ -53,9 +53,28 @@ const get = async (url) => {
   return await response.json();
 };
 
+const filterPrices = () => {
+  return prices.value.filter(val => {
+    return typeof val === 'number';
+  });
+};
+
 const calcAverage = () => {
-  const arr = prices.value;
-  average.value = arr.reduce((sum, val) => sum + val, 0) / arr.length;
+  const prices = filterPrices();
+  average.value = prices.reduce((sum, val) => sum + val, 0) / prices.length;
+};
+
+const calcStdev = () => {
+  const av = average.value;
+  const prices = filterPrices();
+  stdev.value = (filterPrices().reduce((sum, price) => {
+    return sum + (av - price) ** 2;
+  }, 0) / prices.length) ** 0.5;
+};
+
+const recalc = () => {
+  calcAverage();
+  calcStdev();
 };
 
 const format = price => {
@@ -64,6 +83,8 @@ const format = price => {
 
 const average = ref();
 const prices = ref([]);
+const stdev = ref();
+const showSources = ref(true);
 
 (() => {
   let idx = -1;
@@ -72,8 +93,9 @@ const prices = ref([]);
     idx = (idx + 1) % dataSources.length;
     try {
       const source = dataSources[idx];
+      prices.value[idx] = null;
       prices.value[idx] = source.pick(await get(source.url));
-      calcAverage();
+      recalc();
     } catch (e) {};
   };
   loop();
@@ -88,12 +110,16 @@ const prices = ref([]);
 
 <template>
   <p>1 BTC = {{ format(average) }} USD</p>
-  <p>Data Sources:</p>
-  <ul>
-    <li v-for="(val, i) in dataSources">
-      {{ val.name }}: {{ format(prices[i]) }}
-    </li>
-  </ul>
+  <button @click="showSources = !showSources">Toggle Sources</button>
+  <div v-show="showSources">
+    <p>Data Sources:</p>
+    <ul>
+      <li v-for="(val, i) in dataSources">
+        {{ val.name }}: {{ format(prices[i]) }}
+      </li>
+    </ul>
+    <p>Standard Deviation: {{ stdev }}</p>
+  </div>
 </template>
 
 <style scoped>
