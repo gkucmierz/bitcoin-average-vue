@@ -34,12 +34,12 @@ const dataSources = [
     pick: res => +res.result.XXBTZUSD.a[0],
     asset: 'USD',
   },
-  // {
-  //   name: 'bitstamp',
-  //   url: 'https://www.bitstamp.net/api/v2/ticker/btcusd',
-  //   pick: res => +res.last,
-  //   asset: 'USD',
-  // },
+  {
+    name: 'bitstamp',
+    url: 'https://www.bitstamp.net/api/v2/ticker/btcusd',
+    pick: res => +res.last,
+    asset: 'USD',
+  },
   {
     name: 'coingecko',
     url: 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd',
