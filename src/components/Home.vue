@@ -41,6 +41,12 @@ const dataSources = [
     asset: 'USD',
   },
   {
+    name: 'kucoin',
+    url: 'https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=BTC-USDT',
+    pick: res => +res.data.price,
+    asset: 'USDT',
+  },
+  {
     name: 'coingecko',
     url: 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd',
     pick: res => +res.bitcoin.usd,
