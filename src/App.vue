@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import Home from './components/Home.vue';
 import Trianglify from 'trianglify/dist/trianglify.bundle.js';
 
@@ -19,15 +19,22 @@ const updateBackground = () => {
   background.value.appendChild(pattern.toSVG());
 }
 
-onMounted(updateBackground);
-
-window.addEventListener('resize', event => {
+const handleResize = event => {
   const newWidth = round(event.target.innerWidth);
   const newHeight = round(event.target.innerHeight);
   if (newWidth === width.value && newHeight === height.value) return;
   width.value = newWidth;
   height.value = newHeight;
   updateBackground();
+};
+
+onMounted(() => {
+  updateBackground();
+  window.addEventListener('resize', handleResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize);
 });
 
 </script>
