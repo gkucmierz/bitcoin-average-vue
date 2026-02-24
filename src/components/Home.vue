@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { format } from '../utils/format';
 
 const TIMEOUT = 15e3;
 
@@ -85,13 +86,6 @@ const recalc = () => {
 
 const vibrate = () => {
   navigator?.vibrate([30,20,20]);
-};
-
-const format = (price, precision = 2, split = false) => {
-  const num = (price ?? 0);
-  const str = (Number.isNaN(num) ? 0 : num).toFixed(precision);
-  if (!split) return str;
-  return (str.match(/(^\d{1,2}(?=(\d{3})*$)|\d{3})/g) || []).join(' ');
 };
 
 const dataSourcesEl = ref(null);
