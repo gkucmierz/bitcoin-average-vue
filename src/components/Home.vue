@@ -56,8 +56,16 @@ const dataSources = [
 ];
 
 const get = async (url) => {
-  const response = await fetch(url);
-  return await response.json();
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+    return await response.json();
+  } catch (err) {
+    console.warn(`Fetch failed for ${url}, falling back to proxy...`, err);
+    const proxyUrl = `https://cors-proxy.7u.pl/?url=${encodeURIComponent(url)}`;
+    const response = await fetch(proxyUrl);
+    return await response.json();
+  }
 };
 
 const filterPrices = () => {
