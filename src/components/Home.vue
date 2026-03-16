@@ -19,9 +19,9 @@ const dataSources = [
   },
   {
     name: 'bybit',
-    url: 'https://api.bybit.com/v2/public/tickers?symbol=BTCUSD',
-    pick: res => +res.result[0].last_price,
-    asset: 'USD',
+    url: 'https://api.bybit.com/v5/market/tickers?category=spot&symbol=BTCUSDT',
+    pick: res => +res.result.list[0].lastPrice,
+    asset: 'USDT',
   },
   {
     name: 'coinbase',
@@ -42,15 +42,15 @@ const dataSources = [
     asset: 'USD',
   },
   {
-    name: 'kucoin',
-    url: 'https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=BTC-USDT',
-    pick: res => +res.data.price,
+    name: 'mexc',
+    url: 'https://api.mexc.com/api/v3/ticker/price?symbol=BTCUSDT',
+    pick: res => +res.price,
     asset: 'USDT',
   },
   {
-    name: 'coingecko',
-    url: 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd',
-    pick: res => +res.bitcoin.usd,
+    name: 'gemini',
+    url: 'https://api.gemini.com/v1/pubticker/btcusd',
+    pick: res => +res.last,
     asset: 'USD',
   },
 ];
