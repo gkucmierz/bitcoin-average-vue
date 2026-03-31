@@ -82,7 +82,7 @@ const calcAverage = () => {
 const calcStdev = () => {
   const av = average.value;
   const prices = filterPrices();
-  stdev.value = (filterPrices().reduce((sum, price) => {
+  stdev.value = (prices.reduce((sum, price) => {
     return sum + (av - price) ** 2;
   }, 0) / prices.length) ** 0.5;
 };
