@@ -118,15 +118,12 @@ onMounted(() => {
       prices.value[idx] = null;
       prices.value[idx] = source.pick(await get(source.url));
       recalc();
-    } catch (e) {};
+    } catch (e) {
+      console.error(e);
+    }
   };
   loop();
 })();
-
-// get(`
-// `.trim()).then(res => {
-//   console.log(res);
-// });
 
 </script>
 
@@ -163,8 +160,6 @@ onMounted(() => {
 }
 
 .box {
-/*  cursor: pointer;*/
-
   position: absolute;
   top: 50%;
   left: 50%;
